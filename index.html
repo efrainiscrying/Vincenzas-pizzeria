@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vincenza's Pizzeria | Alpharetta, GA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8352A;
+    --red-dark: #9B2318;
+    --red-light: #F4EAE9;
+    --cream: #FAF5EE;
+    --cream-dark: #F0E8D8;
+    --gold: #D4920A;
+    --gold-light: #F5D78A;
+    --charcoal: #1A1208;
+    --text-mid: #4A3728;
+    --text-muted: #8B7355;
+    --white: #FFFFFF;
+    --border: rgba(200, 53, 42, 0.15);
+    --shadow: 0 12px 48px rgba(26,18,8,0.12);
+    --radius: 16px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 5vw;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(250,245,238,0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 24px rgba(26,18,8,0.1);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--red);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--charcoal); }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-mid);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--red-dark) !important; transform: translateY(-1px) scale(1.02); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--charcoal); border-radius: 2px; transition: all 0.3s; }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 70px 0 0 0;
+    background: var(--cream);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--red); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--charcoal);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,53,42,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(212,146,10,0.15) 0%, transparent 60%);
+  }
+  .hero-pizza-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/e33820_4e63e4d813274da0877ee84817710c0e~mv2.jpg/v1/fit/w_2500,h_1330,al_c/e33820_4e63e4d813274da0877ee84817710c0e~mv2.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.25;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem 5vw;
+    max-width: 900px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(212,146,10,0.2);
+    border: 1px solid rgba(212,146,10,0.4);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.45rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 0.9;
+    margin-bottom: 0.3em;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--red);
+    display: block;
+  }
+  .hero-tagline {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+    max-width: 520px;
+    margin: 1.5rem auto 2.5rem;
+    line-height: 1.6;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2.2rem;
+    border-radius: 50px;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,53,42,0.4); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.4);
+    padding: 1rem 2.2rem;
+    border-radius: 50px;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); transform: translateY(-2px); }
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: fadeUp 0.8s 0.8s both;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    animation: scrollLine 2s ease infinite;
+  }
+
+  /* TICKER */
+  .ticker {
+    background: var(--red);
+    padding: 0.75rem 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
+  .ticker-inner {
+    display: flex;
+    gap: 4rem;
+    white-space: nowrap;
+    animation: ticker 25s linear infinite;
+    width: max-content;
+  }
+  .ticker span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .ticker-dot { color: var(--gold-light); margin: 0 0.5rem; }
+
+  /* SECTIONS GENERIC */
+  section { position: relative; z-index: 1; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--charcoal);
+  }
+  .section-title em { font-style: italic; color: var(--red); }
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 520px;
+    margin-top: 1rem;
+  }
+
+  /* STORY */
+  .story {
+    padding: 8rem 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .story-images {
+    position: relative;
+    height: 540px;
+  }
+  .story-img {
+    position: absolute;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .story-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .story-img-main {
+    width: 75%;
+    height: 75%;
+    top: 0; left: 0;
+    z-index: 2;
+  }
+  .story-img-accent {
+    width: 55%;
+    height: 55%;
+    bottom: 0; right: 0;
+    z-index: 3;
+    border: 4px solid var(--cream);
+  }
+  .story-badge-float {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    background: var(--red);
+    color: var(--white);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.65rem;
+    text-align: center;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    border: 4px solid var(--cream);
+    box-shadow: 0 8px 32px rgba(200,53,42,0.4);
+    padding: 0.5rem;
+  }
+  .story-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .stat-box {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--red);
+  }
+  .stat-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 0.2rem;
+  }
+
+  /* MENU */
+  .menu-section {
+    padding: 8rem 5vw;
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-section::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,53,42,0.15) 0%, transparent 70%);
+  }
+  .menu-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .menu-header .section-label { color: var(--gold-light); }
+  .menu-header .section-title { color: var(--white); }
+  .menu-header .section-sub { color: rgba(255,255,255,0.5); margin: 1rem auto; }
+  .menu-tabs {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .tab-btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Sora', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.03em;
+  }
+  .tab-btn:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.9); }
+  .tab-btn.active { background: var(--red); border-color: var(--red); color: var(--white); }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .menu-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .menu-card:hover { background: rgba(255,255,255,0.09); border-color: rgba(200,53,42,0.5); transform: translateY(-4px); }
+  .menu-card-img {
+    height: 200px;
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    overflow: hidden;
+  }
+  .menu-card-img img { width: 100%; height: 100%; object-fit: cover; }
+  .menu-card-body { padding: 1.25rem; }
+  .menu-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+  .menu-card-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .menu-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .menu-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .add-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    border: none;
+    color: var(--white);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .add-btn:hover { background: var(--red-dark); transform: scale(1.1); }
+
+  /* SPECIALTIES */
+  .specialties {
+    padding: 8rem 5vw;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .specialties-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .pizza-showcase {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .pizza-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--border);
+    transition: all 0.35s;
+    position: relative;
+  }
+  .pizza-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(26,18,8,0.15); }
+  .pizza-card-img {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+    background: var(--cream-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+  }
+  .pizza-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .pizza-card:hover .pizza-card-img img { transform: scale(1.06); }
+  .pizza-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--red);
+    color: var(--white);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 50px;
+  }
+  .pizza-card-body { padding: 1.4rem; }
+  .pizza-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--charcoal);
+  }
+  .pizza-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  .pizza-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .pizza-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--red);
+  }
+  .pizza-sizes { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem; }
+  .order-pizza-btn {
+    background: var(--charcoal);
+    color: var(--white);
+    border: none;
+    padding: 0.6rem 1.3rem;
+    border-radius: 50px;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .order-pizza-btn:hover { background: var(--red); transform: scale(1.03); }
+
+  /* TOPPINGS */
+  .toppings-section {
+    background: var(--cream-dark);
+    padding: 6rem 5vw;
+  }
+  .toppings-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .toppings-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .topping-pill {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    padding: 0.45rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-mid);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .topping-pill:hover { border-color: var(--red); color: var(--red); background: var(--red-light); }
+  .topping-pill.premium {
+    background: rgba(212,146,10,0.1);
+    border-color: rgba(212,146,10,0.3);
+    color: var(--gold);
+  }
+  .topping-pill.premium:hover { background: rgba(212,146,10,0.2); border-color: var(--gold); }
+
+  /* ORDER SECTION */
+  .order-section {
+    padding: 8rem 5vw;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .order-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 30% 50%, rgba(200,53,42,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 30%, rgba(212,146,10,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .order-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+  .order-platforms {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .platform-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.25rem;
+    text-decoration: none;
+    color: var(--charcoal);
+    transition: all 0.3s;
+    display: block;
+  }
+  .platform-card:hover { border-color: var(--red); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(200,53,42,0.12); }
+  .platform-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+  .platform-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .platform-note { font-size: 0.78rem; color: var(--text-muted); }
+  .platform-card.featured { border-color: var(--red); background: var(--red); }
+  .platform-card.featured .platform-name,
+  .platform-card.featured .platform-note { color: rgba(255,255,255,0.85); }
+  .platform-card.featured .platform-icon { filter: brightness(0) invert(1); }
+
+  /* DAILY SPECIALS */
+  .specials-section {
+    background: var(--charcoal);
+    padding: 8rem 5vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .specials-section::after {
+    content: '"';
+    position: absolute;
+    top: -2rem; right: 5%;
+    font-family: 'Playfair Display', serif;
+    font-size: 25rem;
+    color: rgba(255,255,255,0.02);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .specials-header { margin-bottom: 4rem; }
+  .specials-header .section-label { color: var(--gold-light); }
+  .specials-header .section-title { color: var(--white); }
+  .specials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+  }
+  .special-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .special-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--red);
+  }
+  .special-card:hover { border-color: rgba(200,53,42,0.4); transform: translateX(4px); }
+  .special-days {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.75rem;
+  }
+  .special-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .special-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; margin-bottom: 1rem; }
+  .special-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--gold-light);
+  }
+
+  /* REVIEWS */
+  .reviews-section { padding: 8rem 5vw; overflow: hidden; }
+  .reviews-header { text-align: center; margin-bottom: 4rem; }
+  .reviews-track-wrap { overflow: hidden; position: relative; }
+  .reviews-track-wrap::before, .reviews-track-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 2;
+  }
+  .reviews-track-wrap::before { left: 0; background: linear-gradient(to right, var(--cream), transparent); }
+  .reviews-track-wrap::after { right: 0; background: linear-gradient(to left, var(--cream), transparent); }
+  .reviews-track {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    animation: ticker 40s linear infinite;
+  }
+  .review-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    width: 320px;
+    flex-shrink: 0;
+  }
+  .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 0.75rem; letter-spacing: 2px; }
+  .review-text {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  .reviewer { font-size: 0.78rem; font-weight: 600; color: var(--charcoal); }
+  .reviewer-source { font-size: 0.72rem; color: var(--text-muted); }
+
+  /* HOURS & LOCATION */
+  .info-section {
+    background: var(--cream-dark);
+    padding: 8rem 5vw;
+  }
+  .info-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  .info-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+  }
+  .info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    font-size: 0.88rem;
+  }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-day { color: var(--text-muted); }
+  .hours-time { font-weight: 600; color: var(--charcoal); }
+  .open-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(34,197,94,0.1);
+    color: #15803D;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+  }
+  .open-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: pulse 2s ease infinite; }
+  .address-block { margin-top: 1rem; }
+  .address-line { font-size: 1.05rem; color: var(--charcoal); font-weight: 500; line-height: 1.6; }
+  .phone-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--red);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .phone-link:hover { color: var(--red-dark); }
+  .social-links { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  .social-link {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    font-size: 1rem;
+    color: var(--text-mid);
+    transition: all 0.2s;
+  }
+  .social-link:hover { background: var(--red); border-color: var(--red); color: var(--white); transform: translateY(-2px); }
+  .map-embed {
+    margin-top: 1.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .map-embed iframe { display: block; width: 100%; height: 200px; border: none; }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    padding: 4rem 5vw 2rem;
+    color: rgba(255,255,255,0.6);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 2rem;
+  }
+  .footer-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+  .footer-brand-name span { color: var(--red); }
+  .footer-tagline { font-size: 0.85rem; line-height: 1.6; max-width: 280px; }
+  .footer-col h4 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul li a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.3);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* CART DRAWER */
+  .cart-toggle {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 900;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 1.5rem;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 8px 32px rgba(200,53,42,0.5);
+    transition: all 0.25s;
+  }
+  .cart-toggle:hover { background: var(--red-dark); transform: translateY(-2px); }
+  .cart-count {
+    background: var(--white);
+    color: var(--red);
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cart-drawer {
+    position: fixed;
+    right: -420px;
+    top: 0; bottom: 0;
+    width: 420px;
+    background: var(--white);
+    z-index: 1100;
+    box-shadow: -20px 0 60px rgba(26,18,8,0.2);
+    transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,18,8,0.5);
+    z-index: 1050;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    backdrop-filter: blur(4px);
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .cart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+  .cart-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    line-height: 1;
+  }
+  .cart-close:hover { color: var(--red); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 1.5rem; }
+  .cart-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .cart-empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+  }
+  .cart-item-name { font-weight: 600; font-size: 0.88rem; color: var(--charcoal); }
+  .cart-item-price { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.15rem; }
+  .cart-item-controls { display: flex; align-items: center; gap: 0.75rem; }
+  .qty-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: none;
+    color: var(--charcoal);
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .qty-btn:hover { border-color: var(--red); color: var(--red); }
+  .qty-num { font-weight: 600; font-size: 0.9rem; min-width: 16px; text-align: center; }
+  .cart-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+  }
+  .cart-total-label { color: var(--text-muted); }
+  .cart-total-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--charcoal);
+  }
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 1.1rem;
+    border-radius: 50px;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.03em;
+    text-align: center;
+    text-decoration: none;
+  }
+  .checkout-btn:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,53,42,0.4); }
+  .checkout-note { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem; }
+
+  /* SECTION ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* PIZZA BUILDER */
+  .builder-section {
+    padding: 8rem 5vw;
+    background: var(--cream-dark);
+  }
+  .builder-inner { max-width: 1000px; margin: 0 auto; }
+  .builder-header { text-align: center; margin-bottom: 4rem; }
+  .builder-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .builder-panel {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 2rem;
+    border: 1px solid var(--border);
+  }
+  .builder-step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .step-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--red);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .size-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .size-btn {
+    padding: 0.75rem 0.5rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    font-family: 'Sora', sans-serif;
+  }
+  .size-btn:hover { border-color: var(--red); }
+  .size-btn.selected { border-color: var(--red); background: var(--red-light); }
+  .size-label { font-size: 0.78rem; font-weight: 700; color: var(--charcoal); display: block; }
+  .size-slices { font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 0.1rem; }
+  .size-price { font-size: 0.82rem; color: var(--red); font-weight: 600; display: block; margin-top: 0.15rem; }
+  .builder-toppings-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .topping-check {
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Sora', sans-serif;
+  }
+  .topping-check:hover { border-color: var(--red); color: var(--red); }
+  .topping-check.selected { background: var(--charcoal); border-color: var(--charcoal); color: var(--white); }
+  .builder-preview {
+    background: var(--charcoal);
+    border-radius: var(--radius);
+    padding: 2rem;
+    position: sticky;
+    top: 90px;
+  }
+  .preview-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1.5rem;
+  }
+  .preview-pizza {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 6rem;
+    line-height: 1;
+    filter: drop-shadow(0 8px 20px rgba(200,53,42,0.4));
+    transition: transform 0.3s;
+  }
+  .preview-pizza.pop { animation: pop 0.3s ease; }
+  .preview-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .preview-item-name { color: rgba(255,255,255,0.7); }
+  .preview-item-val { color: var(--white); font-weight: 500; }
+  .preview-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .preview-total-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+  .preview-total-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--gold-light);
+  }
+  .add-to-cart-btn {
+    display: block;
+    width: 100%;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 1rem;
+    border-radius: 50px;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.25rem;
+    transition: all 0.25s;
+  }
+  .add-to-cart-btn:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,53,42,0.4); }
+
+  /* KEYFRAMES */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes scrollLine {
+    0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); }
+    100% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .story { grid-template-columns: 1fr; gap: 3rem; }
+    .story-images { height: 380px; }
+    .pizza-showcase { grid-template-columns: 1fr 1fr; }
+    .order-platforms { grid-template-columns: 1fr; }
+    .info-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .builder-grid { grid-template-columns: 1fr; }
+    .builder-preview { position: static; }
+    .toppings-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .specialties-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 600px) {
+    .pizza-showcase { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 3rem; }
+    .cart-drawer { width: 100%; right: -100%; }
+    .specials-grid { grid-template-columns: 1fr; }
+    .size-options { grid-template-columns: repeat(3, 1fr); }
+    .story-stats { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Vincenza's<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#builder">Build a Pizza</a></li>
+    <li><a href="#specials">Specials</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="https://order.toasttab.com/online/vincenza-pizzeria-765-mcfarland-pkwy" target="_blank" class="nav-cta">Order Online</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#story" onclick="toggleMenu()">Our Story</a>
+  <a href="#menu" onclick="toggleMenu()">Menu</a>
+  <a href="#builder" onclick="toggleMenu()">Build a Pizza</a>
+  <a href="#specials" onclick="toggleMenu()">Specials</a>
+  <a href="#location" onclick="toggleMenu()">Location</a>
+  <a href="https://order.toasttab.com/online/vincenza-pizzeria-765-mcfarland-pkwy" target="_blank" class="btn-primary">Order Online →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pizza-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🍕 &nbsp; Alpharetta's Favorite Since Day One</div>
+    <h1>Big Family.<em>Big Flavor.</em></h1>
+    <p class="hero-tagline">Traditional pizza family recipes handed down from generation to generation. New York style, Georgia soul.</p>
+    <div class="hero-actions">
+      <a href="https://order.toasttab.com/online/vincenza-pizzeria-765-mcfarland-pkwy" target="_blank" class="btn-primary">Order Online →</a>
+      <a href="#menu" class="btn-secondary">See Our Menu</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span>Hand-Tossed New York Style</span><span class="ticker-dot">✦</span>
+    <span>Fresh Ingredients Daily</span><span class="ticker-dot">✦</span>
+    <span>Family Recipes</span><span class="ticker-dot">✦</span>
+    <span>Open 7 Days a Week</span><span class="ticker-dot">✦</span>
+    <span>Delivery & Takeout Available</span><span class="ticker-dot">✦</span>
+    <span>Catering Available</span><span class="ticker-dot">✦</span>
+    <span>Kids Menu</span><span class="ticker-dot">✦</span>
+    <span>Call 470-395-3931</span><span class="ticker-dot">✦</span>
+    <span>Hand-Tossed New York Style</span><span class="ticker-dot">✦</span>
+    <span>Fresh Ingredients Daily</span><span class="ticker-dot">✦</span>
+    <span>Family Recipes</span><span class="ticker-dot">✦</span>
+    <span>Open 7 Days a Week</span><span class="ticker-dot">✦</span>
+    <span>Delivery & Takeout Available</span><span class="ticker-dot">✦</span>
+    <span>Catering Available</span><span class="ticker-dot">✦</span>
+    <span>Kids Menu</span><span class="ticker-dot">✦</span>
+    <span>Call 470-395-3931</span><span class="ticker-dot">✦</span>
+  </div>
+</div>
+
+<!-- OUR STORY -->
+<section id="story">
+  <div class="story">
+    <div class="story-images reveal">
+      <div class="story-img story-img-main">
+        <img src="https://static.wixstatic.com/media/0f59bb_091e896253b242978495ebec1dd02bcb~mv2_d_3023_3023_s_4_2.jpg/v1/fit/w_960,h_960,q_90,enc_avif,quality_auto/0f59bb_091e896253b242978495ebec1dd02bcb~mv2_d_3023_3023_s_4_2.jpg" alt="Vincenza's Pizza">
+      </div>
+      <div class="story-img story-img-accent">
+        <img src="https://static.wixstatic.com/media/778ad2_665f6efec9f94920a46125443d2e51d6~mv2.jpg/v1/fit/w_960,h_613,q_90,enc_avif,quality_auto/778ad2_665f6efec9f94920a46125443d2e51d6~mv2.jpg" alt="Vincenza's Pizzeria">
+      </div>
+      <div class="story-badge-float">
+        <span style="font-size:1.4rem">🍕</span>
+        <span style="line-height:1.3;margin-top:0.2rem">Est.<br>Alpharetta</span>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">Born from a<em>Mother's Love</em></h2>
+      <p class="section-sub">Native New Yorkers Anna and Eddie Siino started Vincenza's Pizzeria in honor of Anna's mother. What started as a family tradition became Alpharetta's favorite pizza destination — where every slice tells a story and every bite is a journey through flavor.</p>
+      <p class="section-sub" style="margin-top:0.75rem">It's all about good times, great pizza, and living our best cheesy life. Welcome to the party. 🍕</p>
+      <div class="story-stats">
+        <div class="stat-box">
+          <div class="stat-num">7</div>
+          <div class="stat-desc">Days a week, always open</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">NY</div>
+          <div class="stat-desc">Hand-tossed style perfected</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-desc">Sizes to fit every appetite</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">∞</div>
+          <div class="stat-desc">Generations of family recipes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU SECTION -->
+<section id="menu" class="menu-section">
+  <div class="menu-header reveal">
+    <div class="section-label">Full Menu</div>
+    <h2 class="section-title" style="color:var(--white)">Something for <em style="color:var(--red)">Everyone</em></h2>
+    <p class="section-sub">From classic NY slices to calzones, pastas, subs & more.</p>
+  </div>
+  <div class="menu-tabs reveal">
+    <button class="tab-btn active" onclick="filterMenu('all',this)">All</button>
+    <button class="tab-btn" onclick="filterMenu('pizza',this)">🍕 Pizzas</button>
+    <button class="tab-btn" onclick="filterMenu('appetizer',this)">🧄 Appetizers</button>
+    <button class="tab-btn" onclick="filterMenu('pasta',this)">🍝 Pastas</button>
+    <button class="tab-btn" onclick="filterMenu('calzone',this)">🥐 Calzones</button>
+    <button class="tab-btn" onclick="filterMenu('salad',this)">🥗 Salads</button>
+    <button class="tab-btn" onclick="filterMenu('dessert',this)">🍮 Desserts</button>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- SIGNATURE PIZZAS -->
+<section id="pizzas" class="specialties">
+  <div class="specialties-header reveal">
+    <div>
+      <div class="section-label">Signature Pizzas</div>
+      <h2 class="section-title">The Stars of<em>the Show</em></h2>
+    </div>
+    <a href="https://order.toasttab.com/online/vincenza-pizzeria-765-mcfarland-pkwy" target="_blank" class="btn-primary" style="flex-shrink:0">Order Now →</a>
+  </div>
+  <div class="pizza-showcase" id="signaturePizzas"></div>
+</section>
+
+<!-- PIZZA BUILDER -->
+<section id="builder" class="builder-section">
+  <div class="builder-inner">
+    <div class="builder-header reveal">
+      <div class="section-label">Custom Pizza</div>
+      <h2 class="section-title">Build Your<em>Perfect Pie</em></h2>
+      <p class="section-sub" style="margin:1rem auto">Choose your size, sauce, and toppings — add it to your cart and we'll take it from there.</p>
+    </div>
+    <div class="builder-grid">
+      <div>
+        <div class="builder-panel reveal" style="margin-bottom:1.5rem">
+          <div class="builder-step-title"><span class="step-num">1</span> Choose Your Size</div>
+          <div class="size-options">
+            <button class="size-btn selected" onclick="selectSize(this,'Small 12\"',8.99,6)" data-price="8.99">
+              <span class="size-label">Small</span>
+              <span class="size-slices">6 slices · 12"</span>
+              <span class="size-price">$8.99</span>
+            </button>
+            <button class="size-btn" onclick="selectSize(this,'Medium 14\"',10.99,8)" data-price="10.99">
+              <span class="size-label">Medium</span>
+              <span class="size-slices">8 slices · 14"</span>
+              <span class="size-price">$10.99</span>
+            </button>
+            <button class="size-btn" onclick="selectSize(this,'Large 20\"',18.99,10)" data-price="18.99">
+              <span class="size-label">Large</span>
+              <span class="size-slices">10 slices · 20"</span>
+              <span class="size-price">$18.99</span>
+            </button>
+          </div>
+        </div>
+        <div class="builder-panel reveal" style="margin-bottom:1.5rem">
+          <div class="builder-step-title"><span class="step-num">2</span> Choose Your Sauce</div>
+          <div class="builder-toppings-grid">
+            <button class="topping-check selected" onclick="selectSauce(this,'Tomato Sauce')">Tomato Sauce</button>
+            <button class="topping-check" onclick="selectSauce(this,'White Sauce')">White Sauce</button>
+            <button class="topping-check" onclick="selectSauce(this,'BBQ Sauce')">BBQ Sauce</button>
+            <button class="topping-check" onclick="selectSauce(this,'Hot Sauce')">Hot Sauce</button>
+          </div>
+        </div>
+        <div class="builder-panel reveal">
+          <div class="builder-step-title"><span class="step-num">3</span> Add Toppings</div>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:1rem">Veggies +$1.25 · Meats +$1.75 · Premium +$2.00</p>
+          <div class="builder-toppings-grid" id="toppingChecks"></div>
+        </div>
+      </div>
+      <div class="builder-preview">
+        <div class="preview-title">Your Pizza</div>
+        <div class="preview-pizza" id="previewEmoji">🍕</div>
+        <div class="preview-item">
+          <span class="preview-item-name">Size</span>
+          <span class="preview-item-val" id="pvSize">Small 12"</span>
+        </div>
+        <div class="preview-item">
+          <span class="preview-item-name">Sauce</span>
+          <span class="preview-item-val" id="pvSauce">Tomato Sauce</span>
+        </div>
+        <div class="preview-item">
+          <span class="preview-item-name">Cheese</span>
+          <span class="preview-item-val">Mozzarella</span>
+        </div>
+        <div class="preview-item">
+          <span class="preview-item-name">Toppings</span>
+          <span class="preview-item-val" id="pvToppings">None</span>
+        </div>
+        <div class="preview-total">
+          <span class="preview-total-label">Estimated Total</span>
+          <span class="preview-total-price" id="pvTotal">$8.99</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addCustomToCart()">Add to Cart 🛒</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOPPINGS -->
+<section class="toppings-section">
+  <div class="toppings-inner">
+    <div class="reveal">
+      <div class="section-label">Customize</div>
+      <h2 class="section-title">All Your<em>Favorite Toppings</em></h2>
+      <p class="section-sub">Premium fresh ingredients — every topping added with care, just the way you like it.</p>
+      <div style="margin-top:2rem">
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem">Veggies +$1.25</p>
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:1.25rem;margin-bottom:0.75rem">Meats +$1.75</p>
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:1.25rem;margin-bottom:0.75rem">Premium +$2.00</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem">Veggies</p>
+      <div class="toppings-grid">
+        <span class="topping-pill">Extra Cheese</span>
+        <span class="topping-pill">Roasted Garlic</span>
+        <span class="topping-pill">Eggplant</span>
+        <span class="topping-pill">Mushroom</span>
+        <span class="topping-pill">Bell Peppers</span>
+        <span class="topping-pill">Black Olives</span>
+        <span class="topping-pill">Diced Tomato</span>
+        <span class="topping-pill">Spinach</span>
+        <span class="topping-pill">Hot Peppers</span>
+        <span class="topping-pill">Pineapple</span>
+        <span class="topping-pill">Onion</span>
+      </div>
+      <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem;margin-top:1.5rem">Meats</p>
+      <div class="toppings-grid">
+        <span class="topping-pill">Meatball</span>
+        <span class="topping-pill">Pepperoni</span>
+        <span class="topping-pill">Sausage</span>
+        <span class="topping-pill">Ham</span>
+        <span class="topping-pill">Bacon</span>
+        <span class="topping-pill">Chicken</span>
+        <span class="topping-pill">Canadian Bacon</span>
+      </div>
+      <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem;margin-top:1.5rem">Premium ✦</p>
+      <div class="toppings-grid">
+        <span class="topping-pill premium">Anchovies</span>
+        <span class="topping-pill premium">Fresh Mozzarella</span>
+        <span class="topping-pill premium">Ricotta</span>
+        <span class="topping-pill premium">Ricotta Salata</span>
+        <span class="topping-pill premium">Roasted Red Peppers</span>
+        <span class="topping-pill premium">Catupiry Cheese</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAILY SPECIALS -->
+<section id="specials" class="specials-section">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="specials-header reveal">
+      <div class="section-label">Mon–Thu Deals</div>
+      <h2 class="section-title" style="color:var(--white)">Daily <em style="color:var(--red)">Specials</em></h2>
+    </div>
+    <div class="specials-grid reveal" id="specialsGrid"></div>
+  </div>
+</section>
+
+<!-- ORDER ONLINE -->
+<section class="order-section">
+  <div class="order-inner">
+    <div class="reveal">
+      <div class="section-label">Order Now</div>
+      <h2 class="section-title">Ready to<em>Eat?</em></h2>
+      <p class="section-sub" style="margin:1rem auto">Order directly for the best experience, or find us on your favorite delivery app.</p>
+    </div>
+    <div class="order-platforms reveal">
+      <a href="https://order.toasttab.com/online/vincenza-pizzeria-765-mcfarland-pkwy" target="_blank" class="platform-card featured">
+        <div class="platform-icon" style="color:white;font-size:2rem">🔥</div>
+        <div class="platform-name" style="color:white">Order Direct</div>
+        <div class="platform-note" style="color:rgba(255,255,255,0.7)">Best prices & fastest service via Toast</div>
+      </a>
+      <a href="https://www.ubereats.com/store/vincenzas-pizzeria-alpharetta/rM0jTxwYQ4OL8nqp1NabbQ" target="_blank" class="platform-card">
+        <div class="platform-icon">🟢</div>
+        <div class="platform-name">Uber Eats</div>
+        <div class="platform-note">Delivery to your door</div>
+      </a>
+      <a href="https://www.doordash.com/store/vincenza's-pizza-alpharetta-194573/" target="_blank" class="platform-card">
+        <div class="platform-icon">🔴</div>
+        <div class="platform-name">DoorDash</div>
+        <div class="platform-note">Delivery & pickup available</div>
+      </a>
+    </div>
+    <div class="reveal" style="margin-top:2rem">
+      <a href="https://www.toasttab.com/vincenza-pizzeria-765-mcfarland-pkwy/rewardsSignup" target="_blank" class="btn-primary" style="display:inline-flex;margin:0 auto">🎁 &nbsp; Join Vincenza's Rewards Program</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <div class="reviews-header reveal">
+    <div class="section-label">Happy Customers</div>
+    <h2 class="section-title">What People Are<em>Saying</em></h2>
+  </div>
+  <div class="reviews-track-wrap">
+    <div class="reviews-track" id="reviewsTrack"></div>
+  </div>
+</section>
+
+<!-- HOURS & LOCATION -->
+<section id="location" class="info-section">
+  <div class="info-inner">
+    <div class="info-card reveal">
+      <h3>📍 Find Us</h3>
+      <div class="open-badge"><span class="open-dot"></span> Open Today</div>
+      <div class="address-block">
+        <p class="address-line">765 McFarland Pkwy, Suite D<br>Alpharetta, GA 30004</p>
+        <a href="tel:4703953931" class="phone-link">📞 470.395.3931</a>
+      </div>
+      <div class="social-links">
+        <a href="https://www.facebook.com/vincenzaspizzeria" target="_blank" class="social-link">f</a>
+        <a href="https://www.instagram.com/vincenzas.pizzeria/" target="_blank" class="social-link">◎</a>
+      </div>
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.0!2d-84.2942!3d34.0816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f574e26a5deb3f%3A0x1!2s765+McFarland+Pkwy%2C+Alpharetta%2C+GA+30004!5e0!3m2!1sen!2sus!4v1" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+    <div class="info-card reveal">
+      <h3>🕐 Hours</h3>
+      <div class="open-badge"><span class="open-dot"></span> Open Every Day</div>
+      <div id="hoursTable"></div>
+      <div style="margin-top:2rem;padding:1.25rem;background:var(--cream-dark);border-radius:12px">
+        <p style="font-size:0.82rem;font-weight:600;color:var(--text-mid);margin-bottom:0.4rem">📢 Catering Available</p>
+        <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.5">Planning an event? We offer catering for groups. Pasta orders require 24 hours notice. <a href="tel:4703953931" style="color:var(--red);text-decoration:none;font-weight:600">Call us</a> for details.</p>
+      </div>
+      <div style="margin-top:1rem;padding:1.25rem;background:var(--red-light);border-radius:12px;border:1.5px solid rgba(200,53,42,0.2)">
+        <p style="font-size:0.82rem;font-weight:600;color:var(--red);margin-bottom:0.4rem">🎁 Loyalty Rewards</p>
+        <p style="font-size:0.8rem;color:var(--text-mid);line-height:1.5">Earn points on every order. <a href="https://www.toasttab.com/vincenza-pizzeria-765-mcfarland-pkwy/rewardsSignup" target="_blank" style="color:var(--red);text-decoration:none;font-weight:600">Sign up for free →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Vincenza's<span>.</span></div>
+      <p class="footer-tagline">Where every slice tells a story and every bite is a journey through flavor. It's all about good times, great pizza, and living our best cheesy life.</p>
+      <div class="social-links" style="margin-top:1.5rem">
+        <a href="https://www.facebook.com/vincenzaspizzeria" target="_blank" class="social-link" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)">f</a>
+        <a href="https://www.instagram.com/vincenzas.pizzeria/" target="_blank" class="social-link" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)">◎</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#menu">Signature Pizzas</a></li>
+        <li><a href="#menu">Appetizers</a></li>
+        <li><a href="#menu">Pastas</a></li>
+        <li><a href="#menu">Calzones</a></li>
+        <li><a href="#menu">Salads</a></li>
+        <li><a href="#menu">Desserts</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Order</h4>
+      <ul>
+        <li><a href="https://order.toasttab.com/online/vincenza-pizzeria-765-mcfarland-pkwy" target="_blank">Order Online</a></li>
+        <li><a href="https://www.toasttab.com/vincenza-pizzeria-765-mcfarland-pkwy/rewardsSignup" target="_blank">Rewards Program</a></li>
+        <li><a href="tel:4703953931">Call In</a></li>
+        <li><a href="#location">Directions</a></li>
+        <li><a href="https://www.instagram.com/vincenzas.pizzeria/" target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/vincenzaspizzeria" target="_blank">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Vincenza's Pizzeria. All rights reserved.</p>
+    <p>765 McFarland Pkwy, Suite D · Alpharetta, GA 30004 · <a href="tel:4703953931" style="color:rgba(255,255,255,0.4);text-decoration:none">470.395.3931</a></p>
+  </div>
+</footer>
+
+<!-- CART TOGGLE -->
+<button class="cart-toggle" onclick="toggleCart()">
+  🛒 Cart <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Order 🍕</div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🍽️</div>
+      <p>Your cart is empty.<br>Add something delicious!</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Subtotal</span>
+      <span class="cart-total-amount" id="cartTotal">$0.00</span>
+    </div>
+    <a href="https://order.toasttab.com/online/vincenza-pizzeria-765-mcfarland-pkwy" target="_blank" class="checkout-btn">Checkout Online →</a>
+    <p class="checkout-note">You'll complete your order on Toast's secure checkout</p>
+  </div>
+</div>
+
+<script>
+// DATA
+const menuItems = [
+  { cat: 'pizza', name: 'Classic Cheese Pizza', desc: 'Mozzarella cheese and our signature tomato sauce on hand-tossed dough.', emoji: '🍕', price: '$8.99', priceNum: 8.99 },
+  { cat: 'pizza', name: 'Pepperoni Pizza', desc: 'Loaded with pepperoni, mozzarella and pizza sauce.', emoji: '🍕', price: '$10.49', priceNum: 10.49 },
+  { cat: 'pizza', name: 'Detroit-Style Square', desc: 'Thick, golden crispy crust with soft airy center. Rich tomato sauce and melted mozzarella.', emoji: '🍕', price: '$14.99', priceNum: 14.99, tag: 'New' },
+  { cat: 'appetizer', name: 'Garlic Knots', desc: 'Homemade fried rolls topped with garlic butter and parmesan. Served with marinara.', emoji: '🧄', price: '$5.99', priceNum: 5.99 },
+  { cat: 'appetizer', name: 'Chicken Wings', desc: 'Crispy wings with your choice of sauce. Served with ranch or blue cheese.', emoji: '🍗', price: '$11.99', priceNum: 11.99 },
+  { cat: 'appetizer', name: 'Meatballs', desc: '4 homemade meatballs with pomodoro sauce and mozzarella cheese.', emoji: '🫕', price: '$7.99', priceNum: 7.99 },
+  { cat: 'appetizer', name: 'Chicken Coxinha', desc: 'Shredded chicken covered in a fried potato dough. Served with Roasted Red Pepper Aioli.', emoji: '🍘', price: '$8.99', priceNum: 8.99 },
+  { cat: 'pasta', name: 'Spaghetti & Meatballs', desc: 'Homemade beef meatballs with spaghetti and our homemade pomodoro sauce. Topped with parmesan.', emoji: '🍝', price: '$14.99', priceNum: 14.99 },
+  { cat: 'pasta', name: 'Chicken Alfredo', desc: 'Grilled chicken strips tossed with fettuccine pasta and our homemade Alfredo sauce.', emoji: '🍝', price: '$15.99', priceNum: 15.99 },
+  { cat: 'pasta', name: 'Chicken/Eggplant Parm', desc: 'Breaded chicken or eggplant topped with mozzarella, served with spaghetti pomodoro.', emoji: '🍝', price: '$15.99', priceNum: 15.99 },
+  { cat: 'pasta', name: 'Lasagna', desc: 'Layers of pasta with meat sauce, parmesan, ricotta and mozzarella. Topped with marinara.', emoji: '🫕', price: '$16.99', priceNum: 16.99 },
+  { cat: 'calzone', name: 'Classic Calzone', desc: 'Stuffed with ricotta, mozzarella and your choice of fillings. Served with marinara.', emoji: '🥐', price: '$11.99', priceNum: 11.99 },
+  { cat: 'calzone', name: 'Stromboli', desc: 'Rolled with your choice of meats and cheeses, baked to golden perfection.', emoji: '🌯', price: '$12.99', priceNum: 12.99 },
+  { cat: 'salad', name: 'Garden Salad', desc: 'Fresh mixed greens with tomatoes, cucumbers, olives and your choice of dressing.', emoji: '🥗', price: '$7.99', priceNum: 7.99 },
+  { cat: 'salad', name: 'Caesar Salad', desc: 'Romaine, parmesan, croutons with classic Caesar dressing.', emoji: '🥗', price: '$8.99', priceNum: 8.99 },
+  { cat: 'dessert', name: 'Zeppole', desc: 'Italian fried dough bites topped with powdered sugar. A family favorite.', emoji: '🍩', price: '$5.99 / 12pc', priceNum: 5.99 },
+  { cat: 'dessert', name: 'Cannoli', desc: 'Crispy pastry shells filled with sweet ricotta cream. Authentic Italian dessert.', emoji: '🍦', price: '$4.99', priceNum: 4.99 },
+];
+
+const signaturePizzas = [
+  { name: 'Margherita', desc: 'Fresh mozzarella, ripe tomato and fragrant basil on tomato sauce.', tag: 'Classic', img: 'https://static.wixstatic.com/media/0f59bb_bcb437eaecf54d5f9bd967bf9c3d148f~mv2_d_3021_3021_s_4_2.jpg/v1/fit/w_960,h_960,q_90,enc_avif,quality_auto/0f59bb_bcb437eaecf54d5f9bd967bf9c3d148f~mv2_d_3021_3021_s_4_2.jpg', emoji: '🍕' },
+  { name: 'Meat Lovers', desc: 'Pepperoni, sausage, meatball, ham, bacon and Canadian bacon. The ultimate pie.', tag: 'Bestseller', img: 'https://static.wixstatic.com/media/0f59bb_5463e637ef7c43f48626e3881ab66e54~mv2_d_3024_4032_s_4_2.jpg/v1/fit/w_480,h_640,q_90,enc_avif,quality_auto/0f59bb_5463e637ef7c43f48626e3881ab66e54~mv2_d_3024_4032_s_4_2.jpg', emoji: '🍖' },
+  { name: 'Vegetarian', desc: 'Mushrooms, onions, red peppers, tomatoes, black olives and spinach.', tag: 'Veggie', img: 'https://static.wixstatic.com/media/0f59bb_1b93b3b5cd6547838a6ec42b9675071f~mv2_d_3024_3024_s_4_2.jpg/v1/fit/w_960,h_960,q_90,enc_avif,quality_auto/0f59bb_1b93b3b5cd6547838a6ec42b9675071f~mv2_d_3024_3024_s_4_2.jpg', emoji: '🥦' },
+  { name: 'BBQ Chicken', desc: 'BBQ sauce base, breaded chicken tossed in BBQ sauce with onions. Smoky perfection.', tag: 'Signature', img: 'https://static.wixstatic.com/media/0f59bb_94ad81b601934932af7fe1bd802979cb~mv2_d_3024_4032_s_4_2.jpg/v1/fit/w_480,h_640,q_90,enc_avif,quality_auto/0f59bb_94ad81b601934932af7fe1bd802979cb~mv2_d_3024_4032_s_4_2.jpg', emoji: '🍗' },
+  { name: 'Four Cheese', desc: 'Mozzarella, Provolone, Parmesan and Brazilian Catupiry Cheese. Cheese heaven.', tag: 'Fan Fav', img: 'https://static.wixstatic.com/media/0f59bb_ef51b2bbb9c948eb803bef40db8a8554~mv2_d_2575_2575_s_4_2.jpg/v1/fit/w_960,h_960,q_90,enc_avif,quality_auto/0f59bb_ef51b2bbb9c948eb803bef40db8a8554~mv2_d_2575_2575_s_4_2.jpg', emoji: '🧀' },
+  { name: 'Hot Chicken', desc: 'Hot sauce base, breaded fried chicken tossed in hot sauce. Served with ranch.', tag: 'Spicy 🌶', img: 'https://static.wixstatic.com/media/0f59bb_975bf67dfc5f41e7a3e1c1c4499e178e~mv2.jpg/v1/fit/w_960,h_960,q_90,enc_avif,quality_auto/0f59bb_975bf67dfc5f41e7a3e1c1c4499e178e~mv2.jpg', emoji: '🌶️' },
+];
+
+const specials = [
+  { days: 'Mon–Thu', name: 'Cheese Slice + Coke', desc: 'A classic: one cheese slice paired with a refreshing Coke.', price: '$4.99' },
+  { days: 'Mon–Thu', name: 'Pepperoni Slice + Coke', desc: 'Our most popular slice deal — pepperoni done right.', price: '$5.49' },
+  { days: 'Mon–Thu', name: 'Meat Lovers Slice + Coke', desc: 'The hearty option for the hungry. Loaded with meats.', price: '$5.49' },
+  { days: 'Mon–Thu', name: 'White Slice + Coke', desc: 'Creamy white sauce pizza with a refreshing drink.', price: '$5.49' },
+  { days: 'Family Deal', name: 'Cheese Family Pack', desc: '1 Large Cheese Pie, 4 Small Cokes and 6 Garlic Knots.', price: '$20.99' },
+  { days: 'Family Deal', name: 'Pepperoni Family Pack', desc: '1 Large Pepperoni Pie, 4 Small Cokes and 6 Garlic Knots.', price: '$24.99' },
+  { days: 'Family Deal', name: 'Meat Lovers Family Pack', desc: '1 Large Meat Lovers Pie, 4 Small Cokes and 6 Garlic Knots.', price: '$28.99' },
+];
+
+const reviews = [
+  { text: 'Amazing hole in the wall — best pizza in Alpharetta! Absolutely incredible.', name: 'Sarah M.', source: 'Uber Eats ⭐⭐⭐⭐⭐' },
+  { text: 'Best pizza in GA! Fresh ingredients and cooked to perfection every single time.', name: 'Heatherly M.', source: 'Uber Eats ⭐⭐⭐⭐⭐' },
+  { text: 'Having lived in this area for 20+ years, this is the best pizza I have ever tasted here.', name: 'James R.', source: 'DoorDash ⭐⭐⭐⭐⭐' },
+  { text: 'The closest thing to NY thin crust around. Consistently great. Don\'t let the Chevron station fool you.', name: 'Michael T.', source: 'DoorDash ⭐⭐⭐⭐⭐' },
+  { text: 'Pizza always tastes great! Hot and delicious every time. We only order from here.', name: 'Amy K.', source: 'Google ⭐⭐⭐⭐⭐' },
+  { text: 'Always dependable. Consistently great pizza — this is our family\'s go-to spot.', name: 'David L.', source: 'Yelp ⭐⭐⭐⭐⭐' },
+  { text: 'Vincenza\'s pizza is the real deal. Specializing in Hand Tossed NY Style done right in GA.', name: 'Carlos P.', source: 'Slice ⭐⭐⭐⭐⭐' },
+];
+
+const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const toppingsList = [
+  { name: 'Extra Cheese', type: 'veggie' }, { name: 'Roasted Garlic', type: 'veggie' },
+  { name: 'Eggplant', type: 'veggie' }, { name: 'Mushroom', type: 'veggie' },
+  { name: 'Bell Peppers', type: 'veggie' }, { name: 'Black Olives', type: 'veggie' },
+  { name: 'Spinach', type: 'veggie' }, { name: 'Onion', type: 'veggie' },
+  { name: 'Pineapple', type: 'veggie' }, { name: 'Pepperoni', type: 'meat' },
+  { name: 'Sausage', type: 'meat' }, { name: 'Meatball', type: 'meat' },
+  { name: 'Ham', type: 'meat' }, { name: 'Bacon', type: 'meat' },
+  { name: 'Chicken', type: 'meat' }, { name: 'Fresh Mozzarella', type: 'premium' },
+  { name: 'Ricotta', type: 'premium' }, { name: 'Roasted Red Peppers', type: 'premium' },
+];
+
+// STATE
+let cart = [];
+let selectedSize = { label: 'Small 12"', price: 8.99 };
+let selectedSauce = 'Tomato Sauce';
+let selectedToppings = [];
+
+// RENDER MENU
+function renderMenu(filter) {
+  const grid = document.getElementById('menuGrid');
+  const items = filter === 'all' ? menuItems : menuItems.filter(i => i.cat === filter);
+  grid.innerHTML = items.map(item => `
+    <div class="menu-card" style="animation:fadeUp 0.5s ease both">
+      <div class="menu-card-img">${item.emoji}</div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">${item.name}${item.tag ? ` <span style="background:var(--gold);color:#fff;font-size:0.6rem;padding:2px 7px;border-radius:50px;font-weight:700;vertical-align:middle">${item.tag}</span>` : ''}</div>
+        <div class="menu-card-desc">${item.desc}</div>
+        <div class="menu-card-footer">
+          <div class="menu-price">${item.price}</div>
+          <button class="add-btn" onclick="addToCart('${item.name}',${item.priceNum})" title="Add to cart">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu(cat);
+}
+
+// RENDER SIGNATURES
+function renderSignatures() {
+  const el = document.getElementById('signaturePizzas');
+  el.innerHTML = signaturePizzas.map(p => `
+    <div class="pizza-card">
+      <div class="pizza-card-img">
+        <img src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.parentNode.innerHTML='${p.emoji}<style>.pizza-card-img{align-items:center;justify-content:center;font-size:5rem}</style>'">
+        <div class="pizza-badge">${p.tag}</div>
+      </div>
+      <div class="pizza-card-body">
+        <div class="pizza-name">${p.name}</div>
+        <div class="pizza-desc">${p.desc}</div>
+        <div class="pizza-card-footer">
+          <div>
+            <div class="pizza-price">From $10.99</div>
+            <div class="pizza-sizes">S / M / L available</div>
+          </div>
+          <a href="https://order.toasttab.com/online/vincenza-pizzeria-765-mcfarland-pkwy" target="_blank" class="order-pizza-btn">Order →</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// RENDER SPECIALS
+function renderSpecials() {
+  document.getElementById('specialsGrid').innerHTML = specials.map(s => `
+    <div class="special-card">
+      <div class="special-days">${s.days}</div>
+      <div class="special-name">${s.name}</div>
+      <div class="special-desc">${s.desc}</div>
+      <div class="special-price">${s.price}</div>
+    </div>
+  `).join('');
+}
+
+// RENDER REVIEWS
+function renderReviews() {
+  const doubled = [...reviews, ...reviews];
+  document.getElementById('reviewsTrack').innerHTML = doubled.map(r => `
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <div class="review-text">"${r.text}"</div>
+      <div class="reviewer">${r.name}</div>
+      <div class="reviewer-source">${r.source}</div>
+    </div>
+  `).join('');
+}
+
+// RENDER HOURS
+function renderHours() {
+  document.getElementById('hoursTable').innerHTML = days.map(d => `
+    <div class="hours-row">
+      <span class="hours-day">${d}</span>
+      <span class="hours-time">11:00 AM – 9:00 PM</span>
+    </div>
+  `).join('');
+}
+
+// RENDER TOPPING CHECKS
+function renderToppingChecks() {
+  document.getElementById('toppingChecks').innerHTML = toppingsList.map(t => `
+    <button class="topping-check" onclick="toggleTopping(this,'${t.name}',${t.type === 'veggie' ? 1.25 : t.type === 'meat' ? 1.75 : 2.00})" data-name="${t.name}">${t.name}${t.type === 'premium' ? ' ✦' : ''}</button>
+  `).join('');
+}
+
+// BUILDER
+function selectSize(btn, label, price, slices) {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedSize = { label, price };
+  updatePreview();
+}
+
+function selectSauce(btn, sauce) {
+  document.querySelectorAll('.builder-panel .topping-check').forEach(b => {
+    if (['Tomato Sauce','White Sauce','BBQ Sauce','Hot Sauce'].includes(b.textContent)) {
+      b.classList.remove('selected');
+    }
+  });
+  btn.classList.add('selected');
+  selectedSauce = sauce;
+  updatePreview();
+}
+
+function toggleTopping(btn, name, price) {
+  btn.classList.toggle('selected');
+  if (btn.classList.contains('selected')) {
+    selectedToppings.push({ name, price });
+  } else {
+    selectedToppings = selectedToppings.filter(t => t.name !== name);
+  }
+  updatePreview();
+  const emoji = document.getElementById('previewEmoji');
+  emoji.classList.remove('pop');
+  void emoji.offsetWidth;
+  emoji.classList.add('pop');
+}
+
+function updatePreview() {
+  document.getElementById('pvSize').textContent = selectedSize.label;
+  document.getElementById('pvSauce').textContent = selectedSauce;
+  const toppingsText = selectedToppings.length ? selectedToppings.map(t => t.name).join(', ') : 'None';
+  document.getElementById('pvToppings').textContent = toppingsText.length > 30 ? toppingsText.substring(0,30)+'...' : toppingsText;
+  const toppingTotal = selectedToppings.reduce((sum, t) => sum + t.price, 0);
+  const total = selectedSize.price + toppingTotal;
+  document.getElementById('pvTotal').textContent = '$' + total.toFixed(2);
+}
+
+function addCustomToCart() {
+  const toppingTotal = selectedToppings.reduce((sum, t) => sum + t.price, 0);
+  const total = selectedSize.price + toppingTotal;
+  const name = `Custom ${selectedSize.label} Pizza`;
+  addToCart(name, total);
+  const btn = document.querySelector('.add-to-cart-btn');
+  btn.textContent = '✓ Added!';
+  btn.style.background = '#16a34a';
+  setTimeout(() => { btn.textContent = 'Add to Cart 🛒'; btn.style.background = ''; }, 1500);
+}
+
+// CART
+function addToCart(name, price) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; }
+  else { cart.push({ name, price, qty: 1 }); }
+  renderCart();
+  if (!document.getElementById('cartDrawer').classList.contains('open')) {
+    const toggle = document.querySelector('.cart-toggle');
+    toggle.style.transform = 'scale(1.1) translateY(-2px)';
+    setTimeout(() => { toggle.style.transform = ''; }, 300);
+  }
+}
+
+function changeQty(name, delta) {
+  const item = cart.find(i => i.name === name);
+  if (item) {
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+  }
+  renderCart();
+}
+
+function renderCart() {
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('cartTotal').textContent = '$' + total.toFixed(2);
+  const el = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  if (!cart.length) {
+    el.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🍽️</div><p>Your cart is empty.<br>Add something delicious!</p></div>';
+    footer.style.display = 'none';
+    return;
+  }
+  footer.style.display = 'block';
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</div>
+      </div>
+      <div class="cart-item-controls">
+        <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', -1)">−</button>
+        <span class="qty-num">${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', 1)">+</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCart() {
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+// NAV SCROLL
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// REVEAL ON SCROLL
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// INIT
+renderMenu('all');
+renderSignatures();
+renderSpecials();
+renderReviews();
+renderHours();
+renderToppingChecks();
+updatePreview();
+
+// Re-observe new reveals after render
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}, 100);
+</script>
+</body>
+</html>
